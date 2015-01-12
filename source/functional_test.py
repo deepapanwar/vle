@@ -18,22 +18,22 @@ class NewVisitorTest(unittest.TestCase):
 
         # He notices the page title and the header mention vle
         self.assertIn('vle', self.browser.title)
-        header_text = self.browser.find_element_by_tag_name('h1').txt
+        header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('vle', header_text)
         
         
         # He sees that there are no courses
-        table = self.browser.find_element_by_id('course_list_table')
-        row = table.find_elements_by_tag_name('tr')
+        table = self.browser.find_element_by_id('id_course_list_table')
+        rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '' for row in rows), 
-            "Table already have some course"
+            all(row.text == '' for row in rows), 
+            "Table already has some course"
         )
 
         # but there is a button to create a new course
         button = self.browser.find_element_by_id('id_new_course')
         self.assertEqual(
-                button.value,
+                button.text,
                 'Create course'
          )
         
